@@ -1,0 +1,72 @@
+@keyframes neon-glow {
+    0% { box-shadow: 0 0 5px var(--neon-cyan); }
+    50% { box-shadow: 0 0 15px var(--neon-cyan); }
+    100% { box-shadow: 0 0 5px var(--neon-cyan); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.chat-messages div {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.status-dot {
+    animation: pulse 2s infinite;
+}
+
+.glass-card {
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.neon-button {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neon-button:active {
+    transform: scale(0.95);
+}
+
+.neon-text {
+    animation: textFlicker 5s infinite;
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 1; text-shadow: var(--text-glow); }
+    92% { opacity: 1; text-shadow: var(--text-glow); }
+    93% { opacity: 0.8; text-shadow: none; }
+    94% { opacity: 1; text-shadow: var(--text-glow); }
+    95% { opacity: 0.9; text-shadow: none; }
+    96% { opacity: 1; text-shadow: var(--text-glow); }
+}
+
+.message {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.message.user {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}

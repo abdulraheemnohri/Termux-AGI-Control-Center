@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termux AGI Control Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
+</head>
+<body class="cyberpunk-theme">
+    <div class="glass-container">
+        <header>
+            <h1 class="neon-text">TERMUX AGI CONTROL</h1>
+            <div class="system-status">
+                <span id="model-indicator" class="status-dot red"></span>
+                <span id="model-name">Loading Model...</span>
+                <button id="download-model-btn" class="neon-button small" style="display:none; margin-left: 10px;">DOWNLOAD</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="left-panel">
+                <div class="monitor-box glass-card">
+                    <h3>SYSTEM MONITOR</h3>
+                    <div class="metric">
+                        <label>CPU USAGE</label>
+                        <div class="progress-bar"><div id="cpu-bar" style="width: 0%"></div></div>
+                        <span id="cpu-val">0%</span>
+                    </div>
+                    <div class="metric">
+                        <label>RAM USAGE</label>
+                        <div class="progress-bar"><div id="ram-bar" style="width: 0%"></div></div>
+                        <span id="ram-val">0%</span>
+                    </div>
+                </div>
+
+                <div class="agent-logs glass-card">
+                    <div class="card-header">
+                        <h3>AGENT LOGS</h3>
+                        <button id="clear-logs" class="neon-button small secondary" style="width: auto;">CLEAR</button>
+                    </div>
+                    <div id="log-container" class="log-area"></div>
+                </div>
+            </section>
+
+            <section class="center-panel">
+                <div class="chat-interface glass-card">
+                    <div class="card-header">
+                        <h3>AI ASSISTANT</h3>
+                        <button id="clear-chat" class="neon-button small secondary" style="width: auto;">CLEAR</button>
+                    </div>
+                    <div id="chat-box" class="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" placeholder="Type a command or request...">
+                        <button id="send-btn" class="neon-button">SEND</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-panel">
+                <div class="knowledge-manager glass-card">
+                    <h3>KNOWLEDGE</h3>
+                    <div class="learn-topic">
+                        <input type="text" id="topic-input" placeholder="Learn new topic...">
+                        <button id="learn-btn" class="neon-button">LEARN</button>
+                    </div>
+                    <div class="upload-area">
+                        <input type="file" id="file-input" style="display:none">
+                        <button id="upload-btn" class="neon-button secondary">UPLOAD DOC</button>
+                    </div>
+                    <div id="knowledge-list" class="knowledge-list">
+                        <!-- Knowledge items will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="tool-panel glass-card">
+                    <h3>SYSTEM CONTROL</h3>
+                    <div class="autonomous-box">
+                        <label>AUTONOMOUS MODE</label>
+                        <div class="status-row">
+                            <span id="auto-status" class="status-text">OFF</span>
+                            <button id="auto-toggle" class="neon-button small">START</button>
+                        </div>
+                    </div>
+                    <div class="tool-list">
+                        <button class="tool-btn" onclick="triggerTool('search')">WEB SEARCH</button>
+                        <button class="tool-btn" onclick="triggerTool('ksearch')">KNOW SEARCH</button>
+                        <button class="tool-btn" onclick="triggerTool('code')">CODE GEN</button>
+                        <button class="tool-btn" onclick="triggerTool('improve')">TOOL IMPROVE</button>
+                        <button class="tool-btn" onclick="openSettings()">SETTINGS</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content glass-card">
+            <h3>SYSTEM SETTINGS</h3>
+            <div class="settings-group">
+                <label>Autonomous Topics (comma separated)</label>
+                <textarea id="topics-list" rows="3"></textarea>
+            </div>
+            <div class="settings-group">
+                <label>Model ID</label>
+                <input type="text" id="model-id-input" value="Qwen/Qwen3.5-0.8B">
+            </div>
+            <div class="modal-actions">
+                <button id="save-settings" class="neon-button">SAVE</button>
+                <button id="close-settings" class="neon-button secondary">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
