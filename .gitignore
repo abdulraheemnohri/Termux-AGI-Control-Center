@@ -1,6 +1,0 @@
-__pycache__/
-*.pyc
-models/
-knowledge/vector_db/
-agents/logs/agent.log
-flask.log
