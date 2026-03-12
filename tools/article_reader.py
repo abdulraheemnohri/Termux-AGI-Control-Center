@@ -1,6 +1,8 @@
 import requests
+import os
 from bs4 import BeautifulSoup
 from agents.agent_logs import log_action
+from pypdf import PdfReader
 
 def read_article(url):
     log_action("ArticleReaderTool", "Reading", url)
@@ -26,6 +28,33 @@ def read_article(url):
     except Exception as e:
         log_action("ArticleReaderTool", "Error", str(e))
         return None
+
+def extract_from_file(filepath):
+    log_action("ArticleReaderTool", "Extracting from file", filepath)
+    try:
+        ext = os.path.splitext(filepath)[1].lower()
+        if ext == ".pdf":
+            reader = PdfReader(filepath)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text() + "\n\n"
+            return {"title": os.path.basename(filepath), "content": text, "source": filepath}
+        elif ext in [".txt", ".md", ".html"]:
+            with open(filepath, "r") as f:
+                content = f.read()
+                return {"title": os.path.basename(filepath), "content": content, "source": filepath}
+    except Exception as e:
+        log_action("ArticleReaderTool", "Error extracting file", str(e))
+    return None
+
+class ArticleReader:
+    def read(self, url):
+        return read_article(url)
+
+    def extract(self, filepath):
+        return extract_from_file(filepath)
+
+reader = ArticleReader()
 
 if __name__ == "__main__":
     import sys

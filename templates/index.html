@@ -56,16 +56,28 @@
                         <input type="text" id="topic-input" placeholder="Learn new topic...">
                         <button id="learn-btn" class="neon-button">LEARN</button>
                     </div>
-                    <div id="knowledge-results" class="knowledge-list"></div>
+                    <div class="upload-area">
+                        <input type="file" id="file-input" style="display:none">
+                        <button id="upload-btn" class="neon-button secondary">UPLOAD DOC</button>
+                    </div>
+                    <div id="knowledge-list" class="knowledge-list">
+                        <!-- Knowledge items will be loaded here -->
+                    </div>
                 </div>
 
                 <div class="tool-panel glass-card">
-                    <h3>TOOLS</h3>
+                    <h3>SYSTEM CONTROL</h3>
+                    <div class="autonomous-box">
+                        <label>AUTONOMOUS MODE</label>
+                        <div class="status-row">
+                            <span id="auto-status" class="status-text">OFF</span>
+                            <button id="auto-toggle" class="neon-button small">START</button>
+                        </div>
+                    </div>
                     <div class="tool-list">
-                        <button class="tool-btn">WEB SEARCH</button>
-                        <button class="tool-btn">CODE GEN</button>
-                        <button class="tool-btn">AUTO LEARN</button>
-                        <button class="tool-btn">TOOL IMPROVE</button>
+                        <button class="tool-btn" onclick="triggerTool('search')">WEB SEARCH</button>
+                        <button class="tool-btn" onclick="triggerTool('code')">CODE GEN</button>
+                        <button class="tool-btn" onclick="triggerTool('improve')">TOOL IMPROVE</button>
                     </div>
                 </div>
             </section>

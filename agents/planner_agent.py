@@ -38,6 +38,7 @@ Example: [{"tool": "web_search", "params": {"query": "current weather in Tokyo"}
         # Fallback plan if LLM fails to produce JSON
         return [{"tool": "chat", "params": {"message": user_request}}]
 
+planner_agent = PlannerAgent()
+
 if __name__ == "__main__":
-    planner = PlannerAgent()
-    print(planner.plan("Research how to build a Flask app"))
+    print(planner_agent.plan("Research how to build a Flask app"))

@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const logContainer = document.getElementById('log-container');
     const topicInput = document.getElementById('topic-input');
     const learnBtn = document.getElementById('learn-btn');
-    const knowledgeResults = document.getElementById('knowledge-results');
+    const knowledgeList = document.getElementById('knowledge-list');
+    const fileInput = document.getElementById('file-input');
+    const uploadBtn = document.getElementById('upload-btn');
+    const autoStatus = document.getElementById('auto-status');
+    const autoToggle = document.getElementById('auto-toggle');
 
     // Monitoring
     function updateMonitor() {
@@ -85,6 +89,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Knowledge
+    function updateKnowledge() {
+        fetch('/api/knowledge/browse')
+            .then(res => res.json())
+            .then(data => {
+                knowledgeList.innerHTML = '';
+                data.knowledge.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'knowledge-item';
+                    div.innerHTML = `
+                        <span class="title" title="${item.title}">${item.title}</span>
+                        <span class="delete-btn" onclick="deleteKnowledge('${item.source}')">×</span>
+                    `;
+                    knowledgeList.appendChild(div);
+                });
+            });
+    }
+
+    window.deleteKnowledge = (source) => {
+        if (!confirm(`Delete knowledge from ${source}?`)) return;
+        fetch(`/api/knowledge/delete?source=${encodeURIComponent(source)}`, { method: 'DELETE' })
+            .then(() => updateKnowledge());
+    };
+
     learnBtn.addEventListener('click', () => {
         const topic = topicInput.value.trim();
         if (!topic) return;
@@ -100,11 +127,59 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => res.json())
         .then(data => {
             logContainer.innerHTML += `<br>[UI] Learning completed for ${topic}`;
+            updateKnowledge();
         });
     });
+
+    uploadBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+        if (!fileInput.files.length) return;
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        logContainer.innerHTML += `<br>[UI] Uploading ${fileInput.files[0].name}...`;
+
+        fetch('/api/knowledge/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            logContainer.innerHTML += `<br>[UI] ${data.status || 'Error'}: ${data.message || data.error}`;
+            updateKnowledge();
+        });
+    });
+
+    // Autonomous Mode
+    function updateAutoStatus() {
+        fetch('/api/autonomous/status')
+            .then(res => res.json())
+            .then(data => {
+                autoStatus.innerText = data.running ? 'RUNNING' : 'OFF';
+                autoStatus.style.color = data.running ? 'var(--neon-cyan)' : '#888';
+                autoToggle.innerText = data.running ? 'STOP' : 'START';
+            });
+    }
+
+    autoToggle.addEventListener('click', () => {
+        const action = autoToggle.innerText === 'START' ? 'start' : 'stop';
+        fetch(`/api/autonomous/${action}`, { method: 'POST' })
+            .then(() => updateAutoStatus());
+    });
+
+    // Tools
+    window.triggerTool = (tool) => {
+        addMessage('system', `Triggering ${tool.toUpperCase()} tool...`);
+        // Implementation for manual tool trigger could go here
+        // For now, we just log it
+        logContainer.innerHTML += `<br>[UI] Tool triggered: ${tool}`;
+    };
 
     // Intervals
     setInterval(updateMonitor, 2000);
     setInterval(updateLogs, 3000);
+    setInterval(updateAutoStatus, 5000);
     updateModelStatus();
+    updateKnowledge();
+    updateAutoStatus();
 });

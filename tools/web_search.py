@@ -1,4 +1,4 @@
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 from agents.agent_logs import log_action
 
 def web_search(query, max_results=5):
