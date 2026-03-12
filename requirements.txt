@@ -1,0 +1,13 @@
+torch
+transformers
+accelerate
+sentencepiece
+chromadb
+sentence-transformers
+duckduckgo-search
+requests
+beautifulsoup4
+pypdf
+psutil
+flask
+flask-cors
