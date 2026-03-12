@@ -20,3 +20,9 @@
 [2026-03-12 10:50:16] KnowledgeAgent: Storing Document | Test Title
 [2026-03-12 10:50:16] KnowledgeAgent: Searching Knowledge | What is the capital of France?
 [2026-03-12 10:50:16] KnowledgeAgent: Deleting Knowledge | test_doc
+[2026-03-12 14:17:29] KnowledgeAgent: Storing Document | Reg Test
+[2026-03-12 14:17:29] KnowledgeAgent: Searching Knowledge | What is Termux AGI?
+[2026-03-12 14:17:29] KnowledgeAgent: Deleting Knowledge | reg_test
+[2026-03-12 14:18:16] KnowledgeAgent: Storing Document | Reg Test
+[2026-03-12 14:18:16] KnowledgeAgent: Searching Knowledge | What is Termux AGI?
+[2026-03-12 14:18:16] KnowledgeAgent: Deleting Knowledge | reg_test
