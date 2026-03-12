@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termux AGI Control Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
+</head>
+<body class="cyberpunk-theme">
+    <div class="glass-container">
+        <header>
+            <h1 class="neon-text">TERMUX AGI CONTROL</h1>
+            <div class="system-status">
+                <span id="model-indicator" class="status-dot red"></span>
+                <span id="model-name">Loading Model...</span>
+            </div>
+        </header>
+
+        <main>
+            <section class="left-panel">
+                <div class="monitor-box glass-card">
+                    <h3>SYSTEM MONITOR</h3>
+                    <div class="metric">
+                        <label>CPU USAGE</label>
+                        <div class="progress-bar"><div id="cpu-bar" style="width: 0%"></div></div>
+                        <span id="cpu-val">0%</span>
+                    </div>
+                    <div class="metric">
+                        <label>RAM USAGE</label>
+                        <div class="progress-bar"><div id="ram-bar" style="width: 0%"></div></div>
+                        <span id="ram-val">0%</span>
+                    </div>
+                </div>
+
+                <div class="agent-logs glass-card">
+                    <h3>AGENT LOGS</h3>
+                    <div id="log-container" class="log-area"></div>
+                </div>
+            </section>
+
+            <section class="center-panel">
+                <div class="chat-interface glass-card">
+                    <div id="chat-box" class="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" placeholder="Type a command or request...">
+                        <button id="send-btn" class="neon-button">SEND</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-panel">
+                <div class="knowledge-manager glass-card">
+                    <h3>KNOWLEDGE</h3>
+                    <div class="learn-topic">
+                        <input type="text" id="topic-input" placeholder="Learn new topic...">
+                        <button id="learn-btn" class="neon-button">LEARN</button>
+                    </div>
+                    <div id="knowledge-results" class="knowledge-list"></div>
+                </div>
+
+                <div class="tool-panel glass-card">
+                    <h3>TOOLS</h3>
+                    <div class="tool-list">
+                        <button class="tool-btn">WEB SEARCH</button>
+                        <button class="tool-btn">CODE GEN</button>
+                        <button class="tool-btn">AUTO LEARN</button>
+                        <button class="tool-btn">TOOL IMPROVE</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
